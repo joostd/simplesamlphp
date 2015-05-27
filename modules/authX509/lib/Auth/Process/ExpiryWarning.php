@@ -80,7 +80,7 @@ class sspmod_authX509_Auth_Process_ExpiryWarning extends SimpleSAML_Auth_Process
             return;
         }
 
-        SimpleSAML_Logger::warning('authX509: user certificate expires in ' . $daysleft . ' days');
+        SimpleSAML_Logger::info('authX509: user certificate expires in ' . $daysleft . ' days');
         $state['daysleft'] = $daysleft;
         $state['renewurl'] = $this->renewurl;
 

@@ -6,10 +6,10 @@
  * username/password authentication.
  *
  * @author Olav Morken, UNINETT AS.
- * @package simpleSAMLphp
+ * @package SimpleSAMLphp
  */
 
-/* Retrieve the authentication state. */
+// Retrieve the authentication state
 if (!array_key_exists('AuthState', $_REQUEST)) {
 	throw new SimpleSAML_Error_BadRequest('Missing AuthState parameter.');
 }
@@ -42,14 +42,14 @@ $errorCode = NULL;
 $errorParams = NULL;
 
 if (!empty($_REQUEST['username']) || !empty($password)) {
-	/* Either username or password set - attempt to log in. */
+	// Either username or password set - attempt to log in
 
 	if (array_key_exists('forcedUsername', $state)) {
 		$username = $state['forcedUsername'];
 	}
 
 	if ($source->getRememberUsernameEnabled()) {
-		$sessionHandler = SimpleSAML_SessionHandler::getSessionHandler();
+		$sessionHandler = \SimpleSAML\SessionHandler::getSessionHandler();
 		$params = $sessionHandler->getCookieParams();
 		$params['expire'] = time();
 		$params['expire'] += (isset($_REQUEST['remember_username']) && $_REQUEST['remember_username'] == 'Yes' ? 31536000 : -300);
@@ -93,6 +93,7 @@ if (array_key_exists('forcedUsername', $state)) {
 }
 $t->data['links'] = $source->getLoginLinks();
 $t->data['errorcode'] = $errorCode;
+$t->data['errorcodes'] = SimpleSAML\Error\ErrorCodes::getAllErrorCodeMessages();
 $t->data['errorparams'] = $errorParams;
 
 if (isset($state['SPMetadata'])) {

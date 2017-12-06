@@ -5,7 +5,7 @@
  *
  * @author Mathias Meisfjordskar, University of Oslo.
  *         <mathias.meisfjordskar@usit.uio.no>
- * @package simpleSAMLphp
+ * @package SimpleSAMLphp
  */
 
 $params = array(
@@ -19,4 +19,5 @@ $globalConfig = SimpleSAML_Configuration::getInstance();
 $session = SimpleSAML_Session::getSessionFromRequest();
 $session->setData('negotiate:disable', 'session', FALSE, 24*60*60);
 $t = new SimpleSAML_XHTML_Template($globalConfig, 'negotiate:disable.php');
+$t->data['url'] = SimpleSAML\Module::getModuleURL('negotiate/enable.php');
 $t->show();

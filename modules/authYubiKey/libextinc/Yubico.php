@@ -88,7 +88,7 @@ class Auth_Yubico
 	 * @param    string  The client MAC key (optional)
 	 * @access public
 	 */
-	function Auth_Yubico($id, $key = '')
+	public function __construct($id, $key = '')
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
@@ -105,7 +105,7 @@ class Auth_Yubico
 		return $this->_response;
 	}
 
-	/* TODO? Add functions to get parsed parts of server response? */
+	// TODO? Add functions to get parsed parts of server response?
 
 	/**
 	 * Verify Yubico OTP
@@ -117,7 +117,7 @@ class Auth_Yubico
 	function verify($token)
 	{
 		$parameters = "id=" . $this->_id . "&otp=" . $token;
-		/* Generate signature. */
+		// Generate signature
 		if($this->_key <> "") {
 			$signature = base64_encode(hash_hmac('sha1', $parameters, $this->_key, true));
 			$parameters .= '&h=' . $signature;

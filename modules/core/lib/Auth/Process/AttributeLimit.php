@@ -4,7 +4,7 @@
  * A filter for limiting which attributes are passed on.
  *
  * @author Olav Morken, UNINETT AS.
- * @package simpleSAMLphp
+ * @package SimpleSAMLphp
  */
 class sspmod_core_Auth_Process_AttributeLimit extends SimpleSAML_Auth_ProcessingFilter {
 
@@ -32,7 +32,7 @@ class sspmod_core_Auth_Process_AttributeLimit extends SimpleSAML_Auth_Processing
 	public function __construct($config, $reserved) {
 		parent::__construct($config, $reserved);
 
-		assert('is_array($config)');
+		assert(is_array($config));
 
 		foreach ($config as $index => $value) {
 			if ($index === 'default') {
@@ -65,11 +65,11 @@ class sspmod_core_Auth_Process_AttributeLimit extends SimpleSAML_Auth_Processing
 	private static function getSPIdPAllowed(array &$request) {
 
 		if (array_key_exists('attributes', $request['Destination'])) {
-			/* SP Config. */
+			// SP Config
 			return $request['Destination']['attributes'];
 		}
 		if (array_key_exists('attributes', $request['Source'])) {
-			/* IdP Config. */
+			// IdP Config
 			return $request['Source']['attributes'];
 		}
 		return NULL;
@@ -85,8 +85,8 @@ class sspmod_core_Auth_Process_AttributeLimit extends SimpleSAML_Auth_Processing
      * @throws SimpleSAML_Error_Exception If invalid configuration is found.
 	 */
 	public function process(&$request) {
-		assert('is_array($request)');
-		assert('array_key_exists("Attributes", $request)');
+		assert(is_array($request));
+		assert(array_key_exists('Attributes', $request));
 
 		if ($this->isDefault) {
 			$allowedAttributes = self::getSPIdPAllowed($request);

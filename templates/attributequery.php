@@ -2,26 +2,26 @@
 $this->includeAtTemplateBase('includes/header.php');
 
 $dataId = $this->data['dataId'];
-assert('is_string($dataId)');
+assert(is_string($dataId));
 
 $url = $this->data['url'];
-assert('is_string($url)');
+assert(is_string($url));
 
 $nameIdFormat = $this->data['nameIdFormat'];
-assert('is_string($nameIdFormat)');
+assert(is_string($nameIdFormat));
 
 $nameIdValue = $this->data['nameIdValue'];
-assert('is_string($nameIdValue)');
+assert(is_string($nameIdValue));
 
 $nameIdQualifier = $this->data['nameIdQualifier'];
-assert('is_string($nameIdQualifier)');
+assert(is_string($nameIdQualifier));
 
 $nameIdSPQualifier = $this->data['nameIdSPQualifier'];
-assert('is_string($nameIdSPQualifier)');
+assert(is_string($nameIdSPQualifier));
 
 
 $attributes = $this->data['attributes'];
-assert('is_null($attributes) || is_array($attributes)');
+assert($attributes === null || is_array($attributes));
 
 
 ?>
@@ -59,7 +59,7 @@ assert('is_null($attributes) || is_array($attributes)');
 </p>
 
 <p>
-<input type="submit" name="send" value="Send query" />
+<button type="submit" name="send" class="btn">Send query</button>
 </p>
 </form>
 

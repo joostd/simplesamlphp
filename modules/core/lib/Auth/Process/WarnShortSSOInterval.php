@@ -3,7 +3,7 @@
 /**
  * Give a warning to the user if we receive multiple requests in a short time.
  *
- * @package simpleSAMLphp
+ * @package SimpleSAMLphp
  */
 class sspmod_core_Auth_Process_WarnShortSSOInterval extends SimpleSAML_Auth_ProcessingFilter {
 
@@ -16,7 +16,7 @@ class sspmod_core_Auth_Process_WarnShortSSOInterval extends SimpleSAML_Auth_Proc
 	 * @param array $state  The state of the response.
 	 */
 	public function process(&$state) {
-		assert('is_array($state)');
+		assert(is_array($state));
 
 		if (!array_key_exists('PreviousSSOTimestamp', $state)) {
 			/*
@@ -28,7 +28,7 @@ class sspmod_core_Auth_Process_WarnShortSSOInterval extends SimpleSAML_Auth_Proc
 
 		$timeDelta = time() - $state['PreviousSSOTimestamp'];
 		if ($timeDelta >= 10) {
-			/* At least 10 seconds since last attempt. */
+			// At least 10 seconds since last attempt
 			return;
 		}
 
@@ -39,13 +39,13 @@ class sspmod_core_Auth_Process_WarnShortSSOInterval extends SimpleSAML_Auth_Proc
 			$entityId = 'UNKNOWN';
 		}
 
-		SimpleSAML_Logger::warning('WarnShortSSOInterval: Only ' . $timeDelta .
+		SimpleSAML\Logger::warning('WarnShortSSOInterval: Only ' . $timeDelta .
 			' seconds since last SSO for this user from the SP ' .
 			var_export($entityId, TRUE));
 
-		/* Save state and redirect. */
+		// Save state and redirect
 		$id = SimpleSAML_Auth_State::saveState($state, 'core:short_sso_interval');
-		$url = SimpleSAML_Module::getModuleURL('core/short_sso_interval.php');
+		$url = SimpleSAML\Module::getModuleURL('core/short_sso_interval.php');
 		\SimpleSAML\Utils\HTTP::redirectTrustedURL($url, array('StateId' => $id));
 	}
 

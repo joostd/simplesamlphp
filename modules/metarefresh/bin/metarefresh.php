@@ -2,20 +2,18 @@
 <?php
 
 /*
- * This script can be used to generate metadata for simpleSAMLphp
+ * This script can be used to generate metadata for SimpleSAMLphp
  * based on an XML metadata file.
  */
 
 
-/* This is the base directory of the simpleSAMLphp installation. */
+// This is the base directory of the SimpleSAMLphp installation
 $baseDir = dirname(dirname(dirname(dirname(__FILE__))));
 
-/* Add library autoloader. */
+// Add library autoloader.
 require_once($baseDir . '/lib/_autoload.php');
 
-SimpleSAML_Session::useTransientSession(); /* No need to try to create a session here. */
-
-if(!SimpleSAML_Module::isModuleEnabled('metarefresh')) {
+if(!SimpleSAML\Module::isModuleEnabled('metarefresh')) {
 	echo("You need to enable the metarefresh module before this script can be used.\n");
 	echo("You can enable it by running the following command:\n");
 	echo('  echo >"' . $baseDir . '/modules/metarefresh/enable' . "\"\n");
@@ -23,7 +21,8 @@ if(!SimpleSAML_Module::isModuleEnabled('metarefresh')) {
 }
 
 /* Initialize the configuration. */
-SimpleSAML_Configuration::setConfigDir($baseDir . '/config');
+$configdir = SimpleSAML\Utils\Config::getConfigDir();
+SimpleSAML_Configuration::setConfigDir($configdir);
 
 /* $outputDir contains the directory we will store the generated metadata in. */
 $outputDir = $baseDir . '/metadata-generated';
@@ -170,7 +169,7 @@ function printHelp() {
 	echo(' -h, --help                   Print this help.' . "\n");
 	echo(' -o=<DIR>, --out-dir=<DIR>    Write the output to this directory. The' . "\n");
 	echo('                              default directory is metadata-generated/.' . "\n");
-	echo('                              Path will be relative to the simpleSAMLphp' . "\n");
+	echo('                              Path will be relative to the SimpleSAMLphp' . "\n");
 	echo('                              base directory.' . "\n");
 	echo(' -s, --stdout                 Write the output to stdout instead of' . "\n");
 	echo('                              seperate files in the output directory.' . "\n");

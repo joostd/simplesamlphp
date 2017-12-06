@@ -1,11 +1,11 @@
 <?php
 
 
-/* Load simpleSAMLphp, configuration */
+// Load SimpleSAMLphp, configuration
 $config = SimpleSAML_Configuration::getInstance();
 $session = SimpleSAML_Session::getSessionFromRequest();
 
-/* Check if valid local session exists.. */
+// Check if valid local session exists.
 if ($config->getBoolean('admin.protectindexpage', false)) {
     SimpleSAML\Utils\Auth::requireAdmin();
 }
@@ -37,7 +37,7 @@ $links_welcome[] = array(
 	'text' => '{core:frontpage:doc_header}',
 );
 
-SimpleSAML_Module::callHooks('frontpage', $allLinks);
+SimpleSAML\Module::callHooks('frontpage', $allLinks);
 
 
 

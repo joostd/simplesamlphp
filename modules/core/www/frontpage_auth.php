@@ -1,11 +1,11 @@
 <?php
 
 
-/* Load simpleSAMLphp, configuration */
+// Load SimpleSAMLphp, configuration
 $config = SimpleSAML_Configuration::getInstance();
 $session = SimpleSAML_Session::getSessionFromRequest();
 
-/* Check if valid local session exists.. */
+// Check if valid local session exists
 if ($config->getBoolean('admin.protectindexpage', false)) {
     SimpleSAML\Utils\Auth::requireAdmin();
 }
@@ -35,7 +35,7 @@ $allLinks = array(
 	'auth'       => &$links_auth,
 	'federation' => &$links_federation,
 );
-SimpleSAML_Module::callHooks('frontpage', $allLinks);
+SimpleSAML\Module::callHooks('frontpage', $allLinks);
 
 
 

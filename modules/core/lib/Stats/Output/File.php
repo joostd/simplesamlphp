@@ -3,7 +3,7 @@
 /**
  * Statistics logger that writes to a set of log files
  *
- * @package simpleSAMLphp
+ * @package SimpleSAMLphp
  */
 class sspmod_core_Stats_Output_File extends SimpleSAML_Stats_Output {
 
@@ -51,7 +51,7 @@ class sspmod_core_Stats_Output_File extends SimpleSAML_Stats_Output {
 	 * @param string $date  The date for the log file.
 	 */
 	private function openLog($date) {
-		assert('is_string($date)');
+		assert(is_string($date));
 
 		if ($this->file !== NULL && $this->file !== FALSE) {
 			fclose($this->file);
@@ -64,7 +64,7 @@ class sspmod_core_Stats_Output_File extends SimpleSAML_Stats_Output {
 			throw new SimpleSAML_Error_Exception('Error opening log file: ' . var_export($fileName, TRUE));
 		}
 
-		/* Disable output buffering. */
+		// Disable output buffering
 		stream_set_write_buffer($this->file, 0);
 
 		$this->fileDate = $date;
@@ -77,14 +77,14 @@ class sspmod_core_Stats_Output_File extends SimpleSAML_Stats_Output {
 	 * @param array $data  The event.
 	 */
 	public function emit(array $data) {
-		assert('isset($data["time"])');
+		assert(isset($data['time']));
 
 		$time = $data['time'];
 		$milliseconds = (int)(($time - (int)$time) * 1000);
 
 		$timestamp = gmdate('Y-m-d\TH:i:s', $time) . sprintf('.%03dZ', $milliseconds);
 
-		$outDate = substr($timestamp, 0, 10); /* The date-part of the timstamp. */
+		$outDate = substr($timestamp, 0, 10); // The date-part of the timstamp
 
 		if ($outDate !== $this->fileDate) {
 			$this->openLog($outDate);

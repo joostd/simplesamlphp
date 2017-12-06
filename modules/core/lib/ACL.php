@@ -3,7 +3,7 @@
 /**
  * Generic library for access control lists.
  *
- * @package simpleSAMLphp
+ * @package SimpleSAMLphp
  */
 class sspmod_core_ACL {
 
@@ -21,7 +21,7 @@ class sspmod_core_ACL {
 	 * @param array|string $acl  The access control list.
 	 */
 	public function __construct($acl) {
-		assert('is_string($acl) || is_array($acl)');
+		assert(is_string($acl) || is_array($acl));
 
 		if (is_string($acl)) {
 			$acl = self::getById($acl);
@@ -53,7 +53,7 @@ class sspmod_core_ACL {
 	 * @return array  The access control list array.
 	 */
 	private static function getById($id) {
-		assert('is_string($id)');
+		assert(is_string($id));
 
 		$config = SimpleSAML_Configuration::getOptionalConfig('acl.php');
 		if (!$config->hasValue($id)) {
@@ -99,7 +99,7 @@ class sspmod_core_ACL {
 
 		$op = array_shift($rule);
 		if ($op === NULL) {
-			/* An empty rule always matches. */
+			// An empty rule always matches
 			return TRUE;
 		}
 
@@ -139,7 +139,7 @@ class sspmod_core_ACL {
 			}
 		}
 
-		/* All matches. */
+		// All matches
 		return TRUE;
 	}
 

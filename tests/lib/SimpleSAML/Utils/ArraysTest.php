@@ -1,10 +1,14 @@
 <?php
 
+namespace SimpleSAML\Test\Utils;
+
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Utils\Arrays;
 
 /**
  * Tests for SimpleSAML\Utils\Arrays.
  */
-class Utils_ArraysTest extends PHPUnit_Framework_TestCase
+class ArraysTest extends TestCase
 {
 
     /**
@@ -14,72 +18,23 @@ class Utils_ArraysTest extends PHPUnit_Framework_TestCase
     {
         // check with empty array as input
         $array = array();
-        $this->assertEquals($array, SimpleSAML\Utils\Arrays::arrayize($array));
+        $this->assertEquals($array, Arrays::arrayize($array));
 
         // check non-empty array as input
         $array = array('key' => 'value');
-        $this->assertEquals($array, SimpleSAML\Utils\Arrays::arrayize($array));
+        $this->assertEquals($array, Arrays::arrayize($array));
 
         // check indexes are ignored when input is an array
-        $this->assertArrayNotHasKey('invalid', SimpleSAML\Utils\Arrays::arrayize($array, 'invalid'));
+        $this->assertArrayNotHasKey('invalid', Arrays::arrayize($array, 'invalid'));
 
         // check default index
         $expected = array('string');
-        $this->assertEquals($expected, SimpleSAML\Utils\Arrays::arrayize($expected[0]));
+        $this->assertEquals($expected, Arrays::arrayize($expected[0]));
 
         // check string index
         $index = 'key';
         $expected = array($index => 'string');
-        $this->assertEquals($expected, SimpleSAML\Utils\Arrays::arrayize($expected[$index], $index));
-    }
-
-    /**
-     * Test the normalizeAttributesArray() function with input not being an array
-     *
-     * @expectedException InvalidArgumentException
-     */
-    public function testNormalizeAttributesArrayBadInput()
-    {
-        SimpleSAML\Utils\Arrays::normalizeAttributesArray('string');
-    }
-
-    /**
-     * Test the normalizeAttributesArray() function with an array with non-string attribute names.
-     *
-     * @expectedException InvalidArgumentException
-     */
-    public function testNormalizeAttributesArrayBadKeys()
-    {
-        SimpleSAML\Utils\Arrays::normalizeAttributesArray(array('attr1' => 'value1', 1 => 'value2'));
-    }
-
-    /**
-     * Test the normalizeAttributesArray() function with an array with non-string attribute values.
-     *
-     * @expectedException InvalidArgumentException
-     */
-    public function testNormalizeAttributesArrayBadValues()
-    {
-        SimpleSAML\Utils\Arrays::normalizeAttributesArray(array('attr1' => 'value1', 'attr2' => 0));
-    }
-
-    /**
-     * Test the normalizeAttributesArray() function.
-     */
-    public function testNormalizeAttributesArray()
-    {
-        $attributes = array(
-            'key1' => 'value1',
-            'key2' => array('value2', 'value3'),
-            'key3' => 'value1'
-        );
-        $expected = array(
-            'key1' => array('value1'),
-            'key2' => array('value2', 'value3'),
-            'key3' => array('value1')
-        );
-        $this->assertEquals($expected, SimpleSAML\Utils\Arrays::normalizeAttributesArray($attributes),
-            'Attribute array normalization failed');
+        $this->assertEquals($expected, Arrays::arrayize($expected[$index], $index));
     }
 
 
@@ -88,11 +43,18 @@ class Utils_ArraysTest extends PHPUnit_Framework_TestCase
      */
     public function testTranspose()
     {
+        // check not array
+        $this->assertFalse(Arrays::transpose('string'));
+
         // check bad arrays
-        $this->assertFalse(SimpleSAML\Utils\Arrays::transpose(array('1', '2', '3')),
-            'Invalid two-dimensional array was accepted');
-        $this->assertFalse(SimpleSAML\Utils\Arrays::transpose(array('1' => 0, '2' => '0', '3' => array(0))),
-            'Invalid elements on a two-dimensional array were accepted');
+        $this->assertFalse(
+            Arrays::transpose(array('1', '2', '3')),
+            'Invalid two-dimensional array was accepted'
+        );
+        $this->assertFalse(
+            Arrays::transpose(array('1' => 0, '2' => '0', '3' => array(0))),
+            'Invalid elements on a two-dimensional array were accepted'
+        );
 
         // check array with numerical keys
         $array = array(
@@ -113,8 +75,11 @@ class Utils_ArraysTest extends PHPUnit_Framework_TestCase
                 'key2' => 'value2'
             )
         );
-        $this->assertEquals($transposed, SimpleSAML\Utils\Arrays::transpose($array),
-            'Unexpected result of transpose()');
+        $this->assertEquals(
+            $transposed,
+            Arrays::transpose($array),
+            'Unexpected result of transpose()'
+        );
 
         // check array with string keys
         $array = array(
@@ -135,8 +100,11 @@ class Utils_ArraysTest extends PHPUnit_Framework_TestCase
                 'key2' => 'value2'
             )
         );
-        $this->assertEquals($transposed, SimpleSAML\Utils\Arrays::transpose($array),
-            'Unexpected result of transpose()');
+        $this->assertEquals(
+            $transposed,
+            Arrays::transpose($array),
+            'Unexpected result of transpose()'
+        );
 
         // check array with no keys in common between sub arrays
         $array = array(
@@ -159,7 +127,10 @@ class Utils_ArraysTest extends PHPUnit_Framework_TestCase
                 'key2' => 'value2'
             )
         );
-        $this->assertEquals($transposed, SimpleSAML\Utils\Arrays::transpose($array),
-            'Unexpected result of transpose()');
+        $this->assertEquals(
+            $transposed,
+            Arrays::transpose($array),
+            'Unexpected result of transpose()'
+        );
     }
 }
